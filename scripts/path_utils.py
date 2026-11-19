@@ -55,7 +55,7 @@ def get_cjk_font_properties() -> font_manager.FontProperties:
         except Exception:
             continue
 
-    return font_manager.FontProperties(family="sans-serif")
+    return font_manager.FontProperties()
 
 
 def find_accoreconsole() -> str:
