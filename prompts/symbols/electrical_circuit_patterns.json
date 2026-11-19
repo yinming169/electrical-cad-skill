@@ -1,0 +1,91 @@
+{
+  "version": "2026-11-14",
+  "standards": [
+    "GB/T 24275-2019",
+    "GB/T 4728 / IEC 60617",
+    "GB/T 5094.2 / IEC 61346-2",
+    "EPLAN IEC_symbol 4mm",
+    "NERIN A2 1:100"
+  ],
+  "drawing_defaults": {
+    "template": "NERIN-A2-frame-ready.dxf",
+    "model_scale": 100,
+    "symbol_scale": 100,
+    "text_height": 350,
+    "layers": {
+      "main": "02_粗实线",
+      "control": "01_细实线",
+      "text": "07_文字",
+      "dim": "06_标注",
+      "dashed": "03_细虚线"
+    },
+    "grid": {
+      "rows": ["A", "B", "C", "D", "E"],
+      "cols": ["1", "2", "3", "4", "5", "6"]
+    }
+  },
+  "motor_starting_rules": {
+    "formula": "Ku = 0.75 + 0.25 * (S_transformer_kVA / P_motor_kW)",
+    "thresholds": {
+      "direct_start_min_Ku": 6.0,
+      "star_delta_min_Ku": 4.0,
+      "soft_start_below_Ku": 4.0
+    },
+    "ct_accuracy": {
+      "precision": "0.2级",
+      "billing": "0.5级计费",
+      "substation_meter": "1级测量仪表",
+      "general_indicator": "3级一般保护电器指示仪表",
+      "protection_relay": "B级继电保护装置"
+    },
+    "harmonics_04kV": {
+      "THDu_max_pct": 5.0,
+      "odd_max_pct": 4.0,
+      "even_max_pct": 2.0,
+      "symbols": "Un / In (禁用 UH/IH)"
+    }
+  },
+  "templates": {
+    "direct_start": {
+      "name": "电动机直接起动控制原理图",
+      "keywords": ["直接起动", "全压起动", "直启", "direct", "DOL"],
+      "main_blocks": ["IEC_S00295_THREE_POLE", "IEC_CONTACTOR_3P", "IEC_THERMAL_RELAY_3P", "GB6_MOTOR"],
+      "control_blocks": ["IEC_S00363_FUSE", "IEC_THERMAL_AUX_NC", "IEC_S00258_ESTOP", "IEC_S00255_PUSHBUTTON_NC", "IEC_S00254_PUSHBUTTON_NO", "IEC_S00284_CONTACTOR_NO", "IEC_S00305_COIL", "GB8_LAMP"],
+      "function_bar": ["电源开关", "电动机主回路", "电源指示", "电动机控制回路", "端子排与元器件明细表"],
+      "source_ref": "《电气控制工程师手册》p.64 图2-1"
+    },
+    "star_delta_start": {
+      "name": "电动机星-三角降压起动原理图",
+      "keywords": ["星三角", "星-三角", "Y-△", "Y-D", "star-delta", "降压起动"],
+      "main_blocks": ["IEC_S00295_THREE_POLE", "IEC_CONTACTOR_3P", "IEC_THERMAL_RELAY_3P", "IEC_MOTOR_3PH_6PIN"],
+      "control_blocks": ["IEC_S00363_FUSE", "IEC_THERMAL_AUX_NC", "IEC_S00258_ESTOP", "IEC_S00255_PUSHBUTTON_NC", "IEC_S00254_PUSHBUTTON_NO", "IEC_COIL_DELAY_ON", "IEC_S00305_COIL", "GB8_LAMP"],
+      "wire_range": "101~199",
+      "terminal_block": "-X10",
+      "note": "仅适用于正常运行时为△接法、有6个出线端子的笼型异步电机；KM_Y与KM_△必须电气互锁",
+      "source_ref": "《低压成套开关设备的原理及其控制技术》p.380 图6-78"
+    },
+    "soft_starter": {
+      "name": "电动机软起动控制原理图",
+      "keywords": ["软起动", "软启动", "soft", "ICM2", "旁路接触器"],
+      "main_blocks": ["IEC_MPCB_3P", "IEC_SOFT_STARTER", "IEC_CONTACTOR_3P", "GB6_MOTOR"],
+      "control_blocks": ["IEC_S00363_FUSE", "IEC_S00258_ESTOP", "IEC_SELECTOR_3POS", "IEC_S00305_COIL", "GB8_LAMP"],
+      "note": "Ku < 4 时推荐软起动；配旁路交流接触器",
+      "source_ref": "《低压成套开关设备的原理及其控制技术》p.60 / p.260 方案25-26"
+    },
+    "vfd_drive": {
+      "name": "电动机变频调速控制原理图",
+      "keywords": ["变频", "变频器", "VFD", "调速", "Modbus"],
+      "main_blocks": ["IEC_S00295_THREE_POLE", "IEC_VFD", "GB6_MOTOR"],
+      "control_blocks": ["IEC_S00363_FUSE", "IEC_SELECTOR_3POS", "IEC_BLACK_BOX", "IEC_SHIELD", "GB8_LAMP"],
+      "note": "RS485通信采用屏蔽双绞线（>100m配多模光纤），MODBUS-RTU规约",
+      "source_ref": "《低压成套开关设备的原理及其控制技术》p.260 方案27-28 / p.400"
+    },
+    "ats_dual_power": {
+      "name": "低压配电与4P ATSE备自投系统图",
+      "keywords": ["双电源", "备自投", "ATSE", "进线", "母联", "配电"],
+      "main_blocks": ["IEC_S00287_CIRCUIT_BREAKER", "IEC_ATSE_4P", "IEC_UPS", "GB6_CURRENT_TRANSFORMER", "IEC_ZERO_SEQ_CT"],
+      "note": "TN-S系统进线/母联/ATSE均选4P开关切断N线杂散电流；配2kVA在线式UPS；二次按(a)主/(b)电压/(c)电流/(d)中间继电器分图",
+      "source_ref": "《低压成套》p.89 / p.250 & 《工业与民用配电设计手册》p.401 图7-54"
+    }
+  }
+}

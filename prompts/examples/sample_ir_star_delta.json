@@ -1,0 +1,13 @@
+{
+  "track": "secondary",
+  "circuit_type": "star_delta_start",
+  "title": "37kW 离心风机电动机星-三角降压起动控制原理图",
+  "drawing_no": "IEC-E-02",
+  "project_name": "工业电气自动化示范工程",
+  "power_kw": 37,
+  "voltage_v": 380,
+  "transformer_kva": 800,
+  "has_estop": true,
+  "uncertain_fields": [],
+  "source_text": "37kW风机星三角起动，变压器容量800kVA，带急停和运行指示"
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ElectricalCircuitIR",
+  "description": "统一电气图纸中间表示（IR），用于将自然语言或照片/手绘草图多模态识别结果传递给 electrical_cad_cli.py 生成标准 IEC/GB/EPLAN DXF 图纸。",
+  "type": "object",
+  "required": ["track", "circuit_type", "title"],
+  "properties": {
+    "track": {
+      "type": "string",
+      "enum": ["primary", "secondary"],
+      "description": "制图轨道：primary=电气一次配电系统图，secondary=EPLAN电气二次控制原理图"
+    },
+    "circuit_type": {
+      "type": "string",
+      "enum": [
+        "direct_start",
+        "star_delta_start",
+        "auto_transformer",
+        "soft_starter",
+        "vfd_drive",
+        "ats_dual_power",
+        "sketch_dual_source_primary"
+      ],
+      "description": "典型回路类型"
+    },
+    "title": {
+      "type": "string",
+      "description": "图纸名称，例如：37kW 电动机星-三角降压起动原理图"
+    },
+    "drawing_no": {
+      "type": "string",
+      "default": "IEC-E-01",
+      "description": "图号"
+    },
+    "project_name": {
+      "type": "string",
+      "default": "工业电气自动化示范工程",
+      "description": "项目名称（公开分享时建议使用通用名称）"
+    },
+    "power_kw": {
+      "type": "number",
+      "description": "主负荷/电动机额定功率 (kW)"
+    },
+    "voltage_v": {
+      "type": "number",
+      "default": 380,
+      "description": "额定线电压 (V)"
+    },
+    "transformer_kva": {
+      "type": "number",
+      "default": 1000,
+      "description": "上游变压器容量 (kVA)，用于校核 Ku 起动判据"
+    },
+    "breaker_a": {
+      "type": "number",
+      "description": "主断路器额定电流 (A)，留空则按 1.25*Ie 自动选型"
+    },
+    "cable": {
+      "type": "string",
+      "description": "主回路电缆规格，例如：YJV-3x25mm²+1xPE；照片看不清时在末尾加 ?"
+    },
+    "has_estop": {
+      "type": "boolean",
+      "default": true,
+      "description": "是否包含急停回路"
+    },
+    "uncertain_fields": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "照片或草图中低置信度/模糊字段列表（需人工复核）"
+    },
+    "source_text": {
+      "type": "string",
+      "description": "原始自然语言需求或照片视觉识别摘要"
+    }
+  }
+}
