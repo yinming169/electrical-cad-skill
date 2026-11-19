@@ -28,6 +28,13 @@ jobs:
             mv -f prompts/prompts/universal_system_prompt.md prompts/universal_system_prompt.md
           fi
           rm -rf prompts/prompts
+          python3 -c '
+          from pathlib import Path
+          p = Path("scripts/path_utils.py")
+          txt = p.read_text(encoding="utf-8")
+          txt = txt.replace("return font_manager.FontProperties(family=\"sans-serif\")", "return font_manager.FontProperties()")
+          p.write_text(txt, encoding="utf-8")
+          '
           rm -f .github/workflows/fix-layout.yml
           rmdir .github/workflows .github 2>/dev/null || true
       - name: Verify Skill environment
@@ -39,5 +46,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "fix: move skill files to repository root and remove duplicates"
+          git commit -m "fix: flatten repository structure, remove duplicates, and fix font fallback"
           git push origin main
