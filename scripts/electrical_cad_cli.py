@@ -112,8 +112,12 @@ def cmd_generate(args):
         ents = occ.render_ir_to_entities(ir)
         occ.write_dxf(ents, TEMPLATE_READY_DXF, out_path)
 
+    from dxf_2007_exporter import rebuild_to_autocad_2007
+    export_info = rebuild_to_autocad_2007(out_path, out_path, dxf_version=getattr(args, "dxf_version", "R2007"))
     result = {
         "dxf_path": str(out_path),
+        "dxf_version": export_info["dxfversion"],
+        "ezdxf_audit_errors": export_info["audit_errors"],
         "ir": ir,
     }
 
@@ -182,6 +186,8 @@ def cmd_samples(args):
                 wires = getattr(b, "external_wires", None)
             out_p = out_dir / fname
             ece.save_dxf_page(ents, out_p)
+            from dxf_2007_exporter import rebuild_to_autocad_2007
+            rebuild_to_autocad_2007(out_p, out_p, dxf_version="R2007")
             rep = audit_dxf_strict(out_p, placed_pins=pins, protected_boxes=boxes, external_wires=wires)
             generated.append({
                 "file": str(out_p),
@@ -207,6 +213,8 @@ def cmd_samples(args):
                 wires = getattr(b, "external_wires", None)
             out_p = out_dir / fname
             ece.save_dxf_page(ents, out_p)
+            from dxf_2007_exporter import rebuild_to_autocad_2007
+            rebuild_to_autocad_2007(out_p, out_p, dxf_version="R2007")
             rep = audit_dxf_strict(out_p, placed_pins=pins, protected_boxes=boxes, external_wires=wires)
             generated.append({
                 "file": str(out_p),
@@ -236,6 +244,7 @@ def main():
     p_gen.add_argument("--drawing-no", type=str, default="IEC-E-01", help="图号")
     p_gen.add_argument("--pdf", action="store_true", help="同时输出高清 PDF 预览图")
     p_gen.add_argument("--audit", action="store_true", help="出图后自动执行 16 项规范与碰撞自审")
+    p_gen.add_argument("--dxf-version", default="R2007", choices=["R12", "R2000", "R2007", "R2010", "R2018"], help="输出 DXF 版本，默认 R2007 (AutoCAD 2007 / AC1021)")
     p_gen.set_defaults(func=cmd_generate)
 
     p_aud = sub.add_parser("audit", help="对指定 DXF 执行 16 项严苛几何与规范自审")

@@ -102,3 +102,10 @@ description: 将自然语言描述、手绘草图或电气图纸照片转化为�
 - `scripts/` — 跨平台 Python 生图、自审、`.sdb` 解析与 AutoCAD 核心调用脚本
 - `examples/` — EPLAN 基准样图 PDF、双轨规范样图 PDF、符号图谱 PDF 及 IR 示例
 - `prompts/universal_system_prompt.md` — 供 DeepSeek / Kimi / GLM / Claude 网页端直接复制使用的单文件提示词
+
+
+## AutoCAD 2007 兼容与无 CAD 开源生图引擎
+
+- **开源 CAD 引擎**：内置集成 GitHub 开源 Python CAD 库 [`mozman/ezdxf`](https://github.com/mozman/ezdxf)（MIT 协议），**任何未安装 AutoCAD 的电脑**只需 Python + `pip install -r requirements.txt` 即可独立生成标准 `.dxf` 图纸。
+- **AutoCAD 2007 原生兼容（`R2007` / `AC1021`）**：所有输出图纸与仓库样图均通过 `scripts/dxf_2007_exporter.py` 重建标准 Handle、AcDb 子类标记、UTF-8 编码与 `simplex.shx + gbcbig.shx` 字体样式，并通过 `ezdxf` `doc.audit()` 零错误校验，确保 **AutoCAD 2007 及以上所有版本直接打开无报错、无乱码**。
+- **可选开源看图/转换工具**：如需在无 AutoCAD 电脑上可视化查看/编辑 `.dxf`，可配合开源 [`LibreCAD`](https://github.com/LibreCAD/LibreCAD)；如需离线转 `.dwg`，可配合开源 [`LibreDWG`](https://github.com/LibreDWG/libredwg)。

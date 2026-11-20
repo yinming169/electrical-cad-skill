@@ -93,3 +93,10 @@ electrical-cad-skill/
 
 - 本仓库**不包含**任何受版权保护的出版教材全文或扫描件，仅保留原创代码、标准符号块、结构化规范摘要与合成参考样图。
 - 自动生成的 CAD 图纸供工程设计与评审加速使用；正式施工出图前，仍须由注册电气工程师按现行国家标准及项目设计院规范进行最终人工校审签章。
+
+
+## AutoCAD 2007 兼容与无 CAD 开源生图引擎
+
+- **开源 CAD 引擎**：内置集成 GitHub 开源 Python CAD 库 [`mozman/ezdxf`](https://github.com/mozman/ezdxf)（MIT 协议），**任何未安装 AutoCAD 的电脑**只需 Python + `pip install -r requirements.txt` 即可独立生成标准 `.dxf` 图纸。
+- **AutoCAD 2007 原生兼容（`R2007` / `AC1021`）**：所有输出图纸与仓库样图均通过 `scripts/dxf_2007_exporter.py` 重建标准 Handle、AcDb 子类标记、UTF-8 编码与 `simplex.shx + gbcbig.shx` 字体样式，并通过 `ezdxf` `doc.audit()` 零错误校验，确保 **AutoCAD 2007 及以上所有版本直接打开无报错、无乱码**。
+- **可选开源看图/转换工具**：如需在无 AutoCAD 电脑上可视化查看/编辑 `.dxf`，可配合开源 [`LibreCAD`](https://github.com/LibreCAD/LibreCAD)；如需离线转 `.dwg`，可配合开源 [`LibreDWG`](https://github.com/LibreDWG/libredwg)。
