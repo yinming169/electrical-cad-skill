@@ -156,7 +156,7 @@ jobs:
 
               # 防卡死中文字体样式 (simplex.shx + gbcbig.shx，AutoCAD 2007 原生支持)
               if "NERIN_ISOCP" not in doc.styles:
-                  doc.styles.add("NERIN_ISOCP", dxfattribs={"font": "simplex.shx", "bigfont": "gbcbig.shx", "width": 0.75})
+                  doc.styles.add("NERIN_ISOCP", font="simplex.shx", dxfattribs={"bigfont": "gbcbig.shx", "width": 0.75})
 
               # 重建所有命名图块 (过滤 *Model_Space / *Paper_Space)
               valid_blocks = set()
