@@ -109,3 +109,9 @@ description: 将自然语言描述、手绘草图或电气图纸照片转化为�
 - **开源 CAD 引擎**：内置集成 GitHub 开源 Python CAD 库 [`mozman/ezdxf`](https://github.com/mozman/ezdxf)（MIT 协议），**任何未安装 AutoCAD 的电脑**只需 Python + `pip install -r requirements.txt` 即可独立生成标准 `.dxf` 图纸。
 - **AutoCAD 2007 原生兼容（`R2007` / `AC1021`）**：所有输出图纸与仓库样图均通过 `scripts/dxf_2007_exporter.py` 重建标准 Handle、AcDb 子类标记、UTF-8 编码与 `simplex.shx + gbcbig.shx` 字体样式，并通过 `ezdxf` `doc.audit()` 零错误校验，确保 **AutoCAD 2007 及以上所有版本直接打开无报错、无乱码**。
 - **可选开源看图/转换工具**：如需在无 AutoCAD 电脑上可视化查看/编辑 `.dxf`，可配合开源 [`LibreCAD`](https://github.com/LibreCAD/LibreCAD)；如需离线转 `.dwg`，可配合开源 [`LibreDWG`](https://github.com/LibreDWG/libredwg)。
+
+
+## 符号库三级优先级与 EPLAN 端子/成套报表规范
+
+- **符号优先级**：一级主库 `猛哥专用符号库`（默认首选）→ 二级辅库 `IEC_symbol` / `IEC_single_symbol` / `GB_symbol` / `GB_single_symbol` → 三级系统库 `SPECIAL` / `GRAPHICS`；原则上禁用 17 个历史非标 CAD 块（详见 `references/eplan_symbol_and_frame_master.md`）。
+- **端子图与成套清单**：端子图表（`.f13` + `GRAPHICS.sdb`）、封面（`.f26`）、目录（`.f06`）、部件列表/汇总表（`.f01`/`.f02`）、箱柜清单（`.f18`）、电缆总览（`.f10`）与线号统计（`.f27`）严格遵循 `references/eplan_forms_and_terminals_spec.md`，调用 `scripts/eplan_reports_generator.py` 输出 AutoCAD 2007 (`AC1021`) 兼容 DXF。
